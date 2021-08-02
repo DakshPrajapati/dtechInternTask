@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "821955827323",
+    "project_id": "tannmanngadi",
+    "storage_bucket": "tannmanngadi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821955827323:android:2a065c3c8eacfbff6774de",
+        "android_client_info": {
+          "package_name": "com.example.tann_mann_gadi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821955827323-aq17df1fnjgspjodg4ld1j3o7q2hcd5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHI9s3ZNV_WLPRxM9MqxO-qmfEn2eCNPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821955827323-aq17df1fnjgspjodg4ld1j3o7q2hcd5o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
