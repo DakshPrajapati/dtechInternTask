@@ -1,10 +1,21 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:interntask/home_screen.dart';
+import 'package:interntask/main.dart';
 import 'auth_services.dart';
 import 'package:provider/provider.dart';
-import 'authentication.dart';
+import 'authentication.dart'; 
+
+
 
 class Login extends StatefulWidget {
+
   final Function toggleScreen;
 
   const Login({Key key, this.toggleScreen}) : super(key: key);
@@ -23,12 +34,61 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  void _loginWithGoogle() async{
+
+  setState((){
+      
+  });
+
+  final googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  try{
+    final googleSignInAccount = await googleSignIn.signIn();
+    if(googleSignInAccount == null){
+      setState(() {
+        
+      });
+      return;
+    }
+
+    final googleSignInAuthentication = await googleSignInAccount.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    
+    await FirebaseFirestore.instance.collection('users').add({
+      'email': googleSignInAccount.email,
+      'imageUrl' : googleSignInAccount.photoUrl,
+      'name': googleSignInAccount.displayName,
+    });
+
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+
+  }on FirebaseAuthException catch (e){
+    var content = "error";
+  }
+
+  showDialog(context: context, builder: (context)=>AlertDialog(
+    title: Text('failed'),
+    content: Text('error'),
+    actions: [TextButton(onPressed: (){
+      Navigator.of(context).pop();
+    },child: Text('OK'),)],
+  ));
+
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +128,11 @@ class _LoginState extends State<Login> {
                     height: MediaQuery.of(context).size.height * (2 / 6) + 50,
                     width: double.infinity,
                     child: Center(
-                      child: Image.asset(
-                        'images/logo.png',
-                        //width: 600.0,
-                        height: 160.0,
-                        //fit: BoxFit.cover,
-                      ),
+                      child: Text('logo will go here')
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.width - 100,
+                    height: MediaQuery.of(context).size.width - 50,
                     width: MediaQuery.of(context).size.width - 100,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -140,6 +195,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
+                        
                         Material(
                           color: Color(0xffE0902F),
                           shape: RoundedRectangleBorder(
@@ -159,6 +215,23 @@ class _LoginState extends State<Login> {
                             },
                             child: Text(
                               "login",
+                              style: GoogleFonts.quicksand(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Text('or'),
+                        Material(
+                          color: Color.fromRGBO(47, 159, 224, 1),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.0)),
+                          child: MaterialButton(
+                            //color: Colors.red,
+                            minWidth: 150,
+                            onPressed: () async {
+                              _loginWithGoogle();
+                            },
+                            child: Text(
+                              "Google",
                               style: GoogleFonts.quicksand(color: Colors.white),
                             ),
                           ),
@@ -207,3 +280,5 @@ class _LoginState extends State<Login> {
     ));
   }
 }
+
+

@@ -67,19 +67,14 @@ class _RegisterState extends State<Register> {
               Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * (2 / 6) + 50,
+                    height: MediaQuery.of(context).size.height * (2 / 6) +50,
                     width: double.infinity,
                     child: Center(
-                      child: Image.asset(
-                        'images/logo.png',
-                        //width: 600.0,
-                        height: 160.0,
-                        //fit: BoxFit.cover,
-                      ),
+                      child: Text('logo will go here')
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.width - 100,
+                    height: MediaQuery.of(context).size.width - 50,
                     width: MediaQuery.of(context).size.width - 100,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -136,6 +131,38 @@ class _RegisterState extends State<Register> {
                             cursorColor: Colors.black,
                             decoration: InputDecoration(
                               hintText: "Password",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 13.0, left: 13),
+                          child: TextFormField(
+                            controller: _emailController,
+                            validator: (val) => val.isNotEmpty
+                                ? null
+                                : "Please enter name",
+                            cursorColor: Colors.black,
+                            decoration: InputDecoration(
+                              hintText: "Name",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 13.0, left: 13),
+                          child: TextFormField(
+                            controller: _emailController,
+                            validator: (val) => val.isNotEmpty
+                                ? null
+                                : "Please enter a Mobile number",
+                            cursorColor: Colors.black,
+                            decoration: InputDecoration(
+                              hintText: "Phone number",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black),
                               ),
@@ -201,9 +228,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  
                 ],
               )
             ],
